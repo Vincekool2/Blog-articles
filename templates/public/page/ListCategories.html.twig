@@ -1,0 +1,18 @@
+{% extends 'public/base.html.twig' %}
+
+
+{% block metatitle %}
+    Articles
+{% endblock %}
+
+{% block body %}
+
+    {% for category in categories %}
+
+            <article style="background:{{ category.color }};" >
+                <a href="{{ path('ArticlesInCategories', {id: category.id}) }}"><h1>{{ category.title }}</h1></a>
+            </article>
+
+
+    {% endfor %}
+{% endblock %}

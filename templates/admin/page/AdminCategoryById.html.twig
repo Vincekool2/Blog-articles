@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block metatitle %}
+    {{ category.title}}
+{% endblock %}
+{% block body %}
+
+    {% for article in articles %}
+        <article>
+            <h1>{{ article.title }}</h1>
+            <p>Published on {{ article.createAt | date("j F Y") }} at {{ article.createAt | date("H:i") }}</p>
+            <img src="{{ article.image }}" alt="image article">
+            <p>{{ article.content }}</p>
+        </article>
+    {% endfor %}
+{% endblock %}

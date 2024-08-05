@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block metatitle %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="https://ps.w.org/wp-favicon-remover/assets/icon-256x256.png?rev=2277931">
+    <link rel="stylesheet" href="{{ asset('cssAdmin.css') }}">
+
+</head>
+<body>
+<header>
+
+</header>
+<nav>
+
+    <ul>
+        <a href="{{ path("admin") }}"><li>Home</li></a>
+        <a href="{{ path("AdminArticles") }}"> <li>Articles</li></a>
+        <a href="{{ path("AdminListCategories") }}"><li>Categories</li></a>
+    </ul>
+</nav>
+<main>
+    {% for message in app.flashes('success') %}
+        <div class="success-message">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% block body %}{% endblock %}
+</main>
+<footer>
+    <p>Copyright © 2024 Le Bihan Inc. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

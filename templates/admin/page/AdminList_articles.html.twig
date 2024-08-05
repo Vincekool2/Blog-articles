@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% block metatitle %}
+    ARTICLES
+{% endblock %}
+
+{% block body %}
+
+    <h1>Number of articles: {{ articles|length }}</h1>
+
+    <section class="admin-list-articles">
+
+
+        <table class="admin-article-table">
+            <tr>
+                <td>Id</td>
+                <td>Image</td>
+                <td>Title</td>
+                <td>Category</td>
+                <td>Date</td>
+                <td>isPublished</td>
+            </tr>
+
+
+
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td><img class="admin-article-image" src="{{ article.image }}" alt="{{ article.title }}" /></td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.category.title   }} </td>
+                    <td>{{ article.createAt | date('d-m-Y') }}</td>
+                    <td>
+                        {% if article.isPublished %}
+                            <p>Yes</p>
+                        {% else %}
+                            <p>No</p>
+                        {% endif %}
+
+                    </td>
+                    <td><a href="{{ path('admin_update_article',{id: article.id}) }}">modify</a>/
+                        <a href="{{ path('delete_article', {id: article.id}) }}">delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+    </section>
+
+
+
+{% endblock %}

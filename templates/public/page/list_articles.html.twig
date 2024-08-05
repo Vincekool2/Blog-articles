@@ -1,0 +1,21 @@
+{% extends 'public/base.html.twig' %}
+
+
+{% block metatitle %}
+    ARTICLES
+{% endblock %}
+
+{% block body %}
+
+    {% for article in articles %}
+        {% if article.isPublished  %}
+        <article>
+            <a href="{{ path('articlesById', {id: article.id}) }}"><h1>{{ article.title }}</h1></a>
+            <img src="{{ article.image }}" alt="image article">
+            <p> {{ article.description }} </p>
+
+        </article>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
