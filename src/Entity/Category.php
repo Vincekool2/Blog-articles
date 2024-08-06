@@ -40,6 +40,8 @@ class Category
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->createdAt = new \DateTime('NOW');
+        $this->updateAt = new \DateTime('NOW');
     }
 
     public function getId(): ?int

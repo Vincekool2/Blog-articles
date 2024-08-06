@@ -6,19 +6,9 @@
     font-family: sans-serif;
     font-weight:100;
     letter-spacing: 3px;
+
 }
 
-.header {
-    width: 100%;
-    background-color: lightsalmon;
-    padding: 40px;
-}
-
-.footer {
-    height: 200px;
-    width: 100%;
-    background-color: lightskyblue;
-}
 
 .article {
     width: 33%;
@@ -156,3 +146,26 @@ table{
     padding-right: 10%;
     padding-left: 10%;
 }
+.lmega {
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.insertBT {
+    border: solid 1px white;
+    width: 300px;
+    border-radius: 30px;
+    transition: border 0.5s ease, color 0.5s ease, background-color 0.5s ease, border-radius 0.5s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.insertBT:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: solid 1px white;
+}
+
+
+

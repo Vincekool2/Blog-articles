@@ -2,17 +2,21 @@
 
 
 {% block metatitle %}
-    Articles
+    categories
 {% endblock %}
 
 {% block body %}
 
     {% for category in categories %}
 
+
             <article style="background:{{ category.color }};" >
-                <a href="{{ path('AdminArticlesInCategories', {id: category.id}) }}"><h1>{{ category.title }}</h1></a>
+                <a href="{{ path('AdminArticlesInCategories', {id: category.id}) }}"><div><h1>{{ category.title }}</h1></div></a>
+                <a href="{{ path('admin_update_category',{id: category.id}) }}">modify</a>/
+                <a href="{{ path('admin_delete_category', {id: category.id}) }}">delete</a>
             </article>
 
 
     {% endfor %}
+    <a href="{{ path('admin_insert_category') }}"><div class="lmega"><H1 class="insertBT">New category</H1></div></a>
 {% endblock %}

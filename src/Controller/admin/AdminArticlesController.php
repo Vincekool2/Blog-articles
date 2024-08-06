@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminArticlesController extends AbstractController
 {
-    #[Route('/AdminArticles', name: 'AdminArticles')]
+    #[Route('/admin/articles', name: 'AdminArticles')]
     public function Articles(ArticleRepository $articleRepository)
     {
         // récupèrer tous les articles en BDD
@@ -26,7 +26,7 @@ class AdminArticlesController extends AbstractController
 
 
 
-    #[Route('/AdminArticles/show/{id}', name: 'AdminArticlesById')]
+    #[Route('/admin/articles/show/{id}', name: 'AdminArticlesById')]
     public function ArticlesById (ArticleRepository $articleRepository, int $id): Response
     {
 
@@ -38,7 +38,7 @@ class AdminArticlesController extends AbstractController
 
 
 
-    #[Route('/AdminArticles/delete/{id}', name: 'delete_article')]
+    #[Route('/admin/articles/delete/{id}', name: 'delete_article')]
     public function deleteArticle(int $id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
     {
         $article = $articleRepository->find($id);

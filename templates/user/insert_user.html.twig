@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% block metatitle %}
+    Create account
+{% endblock %}
+
+{% block body %}
+<h1>Create Admin</h1>
+
+    <form method="post">
+
+        <div>
+            <label for="">
+                <input placeholder="email" type="email" name="email">
+            </label>
+        </div>
+
+        <div>
+            <label for="">
+                <input placeholder="password" type="password" name="password">
+            </label>
+        </div>
+        <div>
+            <label for="">
+                <select name="role" id="role">
+                    <optgroup label="Choose role">
+                        <option></option>
+                        <option value="[ROLE_ADMIN]">Admin</option>
+                        <option value="[ROLE_USER]">User</option>
+                    </optgroup>
+                </select>
+            </label>
+        </div>
+
+        <div>
+            <input type="submit">
+        </div>
+
+    </form>
+
+
+
+{% endblock %}
