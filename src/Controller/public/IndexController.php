@@ -10,6 +10,7 @@ namespace App\Controller\public;
 // on appelle le namespace des classes qu'on utilise
 // pour que symfony fasse le require de ces classes
 use App\Repository\ArticleRepository;
+use App\Repository\CardRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class IndexController extends AbstractController
 
 
     #[Route('/', name: 'home')]
-    public function index (ArticleRepository $articleRepository)
+    public function index (ArticleRepository $articleRepository, CardRepository $cardRepository)
     {
 
 

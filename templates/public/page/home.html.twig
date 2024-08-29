@@ -1,11 +1,27 @@
-{% extends '/public/base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
 
 {% block metatitle %}
-    LE MEILLEUR BLOG
+    SITE EXAMEN
 {% endblock %}
 
 {% block body %}
-
-<h1>CECI EST UN BLOG</h1>
+    <main>
+        <form method="post">
+            <label for="<">
+                <div class="searchbar">
+                    <input class="inputText" type="text" name="title">
+                    <input type=image src=https://endlessicons.com/wp-content/uploads/2015/08/search-icon-2.png alt="Submit feedback">
+                </div>
+            </label>
+        </form>
+        {% for cards in card %}
+            <article>
+                <div>
+                    <p>{{ cards.title }}</p>
+                    <img src="{{asset('uploads/'~card.0.imagecard) }}"/>
+                </div>
+            </article>
+        {% endfor %}
+    </main>
 {% endblock %}

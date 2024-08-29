@@ -37,11 +37,18 @@ class Category
     #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'category')]
     private Collection $articles;
 
+    /**
+     * @var Collection<int, Card>
+     */
+    #[ORM\OneToMany(targetEntity: Card::class, mappedBy: 'category_id')]
+    private Collection $card_id;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->createdAt = new \DateTime('NOW');
         $this->updateAt = new \DateTime('NOW');
+        $this->card_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,6 +128,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($article->getCategory() === $this) {
                 $article->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Card>
+     */
+    public function getCardId(): Collection
+    {
+        return $this->card_id;
+    }
+
+    public function addCardId(Card $cardId): static
+    {
+        if (!$this->card_id->contains($cardId)) {
+            $this->card_id->add($cardId);
+            $cardId->setCategoryId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCardId(Card $cardId): static
+    {
+        if ($this->card_id->removeElement($cardId)) {
+            // set the owning side to null (unless already changed)
+            if ($cardId->getCategoryId() === $this) {
+                $cardId->setCategoryId(null);
             }
         }
 

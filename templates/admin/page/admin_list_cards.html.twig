@@ -1,0 +1,61 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% block metatitle %}
+    cards
+{% endblock %}
+
+{% block body %}
+
+    <h1>Number of cards: {{ cards|length }}</h1>
+    <a href="{{ path('admin_insert_article') }}">CREATE A NEW card</a>
+    <section class="admin-list-articles">
+
+
+        <table class="admin-article-table">
+            <tr>
+                <td>Id</td>
+                <td>Image</td>
+                <td>Title</td>
+                <td>Date</td>
+                <td>isPublished</td>
+            </tr>
+
+
+
+            {% for card in cards %}
+                <tr>
+                    <td>{{ card.id }}</td>
+                    <td><img class="admin-card-image" src="{{asset('uploads/'~card.imagecard) }}" alt="{{ card.title }}" /></td>
+                    <td>{{ card.title }}</td>
+                    <td>{{ card.publishedAt | date('d-m-Y') }}</td>
+                    <td>
+                        {% if card.publishedAt %}
+                            <p>Yes</p>
+                        {% else %}
+                            <p>No</p>
+                        {% endif %}
+
+                    </td>
+                    <td><a href="{{ path('admin_update_card.html.twig',{id: card.id}) }}">modify</a>/
+
+
+                        <a class="deleteA" >delete</a>
+
+                        <div class="hidden-js-popup">
+                            <a  href="{{ path('deleteCard', {id: card.id}) }}">JUST DELETE ME ALREADY<span>🤬</span></a>
+                        </div>
+                        <div class="DONTDELETE">
+                            <p>no admin...please dont delete me...<span>🥹</span> </p>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+    </section>
+
+
+
+{% endblock %}

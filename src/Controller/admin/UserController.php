@@ -22,25 +22,30 @@ class UserController extends AbstractController
             $password = $request->request->get('password');
             $role = $request->request->get('role');
 
-
-            try {
-                $hashedPassword = $userPasswordHasher->hashPassword(
-                    $user,
-                    $password
-                );
-                $user->setPassword($hashedPassword);
-                $user->setEmail($email);
-                $user->setRoles([$role]);
-
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-
-                $this->addFlash('success', 'user created !');
-
-            } catch (\Exception $exception) {
-                return $this->render('admin/error.html.twig', ['errorMessage' => $exception->getMessage()]);
+            if (!$email || !$password || !$role) {
+                $this->addFlash('success', 'enter all fields');
+                return $this->render('user/insert_user.html.twig');
             }
+                try {
+                    $hashedPassword = $userPasswordHasher->hashPassword(
+                        $user,
+                        $password
+                    );
+                    $user->setPassword($hashedPassword);
+                    $user->setEmail($email);
+                    $user->setRoles([$role]);
+
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+
+
+                    $this->addFlash('success', 'user created !');
+
+                } catch (\Exception $exception) {
+                    return $this->render('admin/error.html.twig', ['errorMessage' => $exception->getMessage()]);
+                }
+
+
         }
         return $this->render('user/insert_user.html.twig');
     }

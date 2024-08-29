@@ -6,32 +6,29 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block metatitle %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="https://ps.w.org/wp-favicon-remover/assets/icon-256x256.png?rev=2277931">
+    <link rel="icon" type="image/x-icon" href="{{ asset('carte-postale2.png') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('style.css') }}">
-
 </head>
 <body>
 <header>
 
 </header>
 <nav>
-
     <ul>
-        <a href="{{ path("home") }}"><li>Home</li></a>
-        <a href="{{ path("articles") }}"> <li>Articles</li></a>
-        <a href="{{ path("ListCategories") }}"><li>Categories</li></a>
-        <a href="{{ path("app_login") }}"><Li>login</Li></a>
-        <a href="{{ path("app_logout") }}"><Li>logout</Li></a>
-
-
+        <a href="{{ path("home") }}"><li>Page principale</li></a>
+        <a href="{{ path("app_login") }}"><Li>Se connecter</Li></a>
+        <a href="{{ path("register_user") }}"><li>Créer un compte</li></a>
     </ul>
 </nav>
 <main>
+    {% for message in app.flashes('success') %}
+        <div class="success-message">
+            {{ message }}
+        </div>
+    {% endfor %}
 {% block body %}{% endblock %}
 </main>
-<footer>
-    <p>Copyright © 2024 Le Bihan Inc. Tous droits réservés.</p>
-</footer>
 
 </body>
 </html>

@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class AdminArticlesController extends AbstractController
 {
@@ -63,7 +65,7 @@ class AdminArticlesController extends AbstractController
     }
 
         #[Route('/admin/articles/insert', 'admin_insert_article')]
-    public function insertArticle (Request $request, EntityManagerInterface $entityManager)
+    public function insertArticle (Request $request, EntityManagerInterface $entityManager ,SluggerInterface $slugger, ParameterBagInterface $params)
         {
             $article = new Article();
 
@@ -71,23 +73,48 @@ class AdminArticlesController extends AbstractController
 
             $articleCreateForm->handleRequest($request);
 
-            if ($articleCreateForm->isSubmitted() && $articleCreateForm->isValid()) {
-                $entityManager->persist($article);
-                $entityManager->flush();
 
-                $this->addFlash('success', 'article enregistré');
-                
+            if ($articleCreateForm->isSubmitted() && $articleCreateForm->isValid()) {
+
+                $imageFile = $articleCreateForm->get('image')->getData();
+
+                // si il y a bien un fichier envoyé
+                if ($imageFile) {
+                    // je récupère son nom
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    // je nettoie le nom (sort les caractères spéciaux etc)
+                    $safeFilename = $slugger->slug($originalFilename);
+                    // je rajoute un identifiant unique au nom
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                    try {
+                        // je récupère le chemin de la racine du projet
+                        $rootPath = $params->get('kernel.project_dir');
+                        // je déplace le fichier dans le dossier /public/upload en partant de la racine
+                        // du projet, et je renomme le fichier avec le nouveau nom (slugifié et identifiant unique)
+                        $imageFile->move($rootPath . '/public/uploads', $newFilename);
+                    } catch (FileException $e) {
+                        dd($e->getMessage());
+                    }
+                    // je stocke dans la propriété image
+                    // de l'entité article le nom du fichier
+                    $article->setImage($newFilename);
+                }
+
+                    $entityManager->persist($article);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', 'article enregistré');
+
+                }
+
+                $articleCreateFormView = $articleCreateForm->createView();
+
+                return $this->render('admin/page/insert_article.html.twig', ['articleForm' => $articleCreateFormView]);
             }
 
-            $articleCreateFormView = $articleCreateForm->createView();
-
-            return $this->render('admin/page/insert_article.html.twig', [
-                'articleForm' => $articleCreateFormView
-            ]);
-        }
-
         #[Route('/admin/articles/update/{id}', 'admin_update_article')]
-    public function updateArticle (Request $request, EntityManagerInterface $entityManager, ArticleRepository $articleRepository, int $id)
+    public function updateArticle (Request $request, EntityManagerInterface $entityManager, ArticleRepository $articleRepository, int $id,)
     {
         $article = $articleRepository->find($id);
 
